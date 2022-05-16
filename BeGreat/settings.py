@@ -9,6 +9,10 @@ SECRET_KEY = 'django-insecure-lz=rqug2gfu1uk0n5=nbw6c@5%)d%0y=nb^6u1zo$84laed00d
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://localhost:3000'
+]
 
 
 INSTALLED_APPS = [
@@ -23,6 +27,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
     'django_extensions',
+    'corsheaders',
     'autho',
     'course',
     'mixins',
@@ -42,6 +47,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'BeGreat.urls'
