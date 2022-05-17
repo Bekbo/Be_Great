@@ -49,8 +49,13 @@ urlpatterns = [
         name='get multitest questions'
     ),
     path(
-        'multitest/answer/',
+        'multitest/answer/<category_id>/',
         MultitestViewSet.as_view({'post': 'submit_answer'}),
         name='answer to multitest'
     ),
+    path(
+        'multitest/result/',
+        MultitestViewSet.as_view({'get': 'get_result'}),
+        name='get result of multitest'
+    )
 ]

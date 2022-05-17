@@ -3,7 +3,8 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from course.models import Course, Category, UserCourse, Question, QuestionOption, Lecture, QuestionAnswer
+from achievement.models import UserAchievement, Achievement
+from course.models import Course, Category, UserCourse, Question, QuestionOption, Lecture, QuestionAnswer, MultiTest
 from course.services import can_user_join_course
 from utils.constants import ANSWER_CHOICES, ANSWER_TEXT_CHOICES
 
@@ -60,8 +61,13 @@ class QuestionSerializer(serializers.ModelSerializer):
             model = QuestionOption
             fields = ('id', 'option_text', 'priority')
 
+    class QuestionCategorySerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Category
+            fields = ('id', 'name')
+
     options = QuestionOptionSerializer(many=True)
-    category = serializers.CharField(source='category.name')
+    category = QuestionCategorySerializer()
 
     class Meta:
         model = Question
@@ -83,7 +89,7 @@ class AnswerSubmitSerializer(serializers.Serializer):
 
         if not Question.objects.filter(id=question).exists():
             raise ValidationError('Такой вопрос не существует!')
-        elif not QuestionOption.objects.filter(question_id=question, id=answer_option).exists():
+        if not QuestionOption.objects.filter(question_id=question, id=answer_option).exists():
             raise ValidationError('Ответ на вопрос не существует!')
 
         return attrs
@@ -91,6 +97,14 @@ class AnswerSubmitSerializer(serializers.Serializer):
 
 class MultitestAnswerSubmitSerializer(AnswerSubmitSerializer):
     answer_type = serializers.HiddenField(default=QuestionAnswer.MULTITEST)
+
+    def validate(self, attrs):
+        user = self.context['request'].user
+        multitest = MultiTest.objects.filter(user_id=user.id).order_by('-created_at').first()
+        if not multitest:
+            raise ValidationError('Мультитест не найден!')
+        attrs['multitest'] = multitest
+        return attrs
 
 
 class AnswerResultSerializer(serializers.Serializer):
@@ -143,3 +157,16 @@ class FinishedCategorySerializer(serializers.ModelSerializer):
     def get_answered_question_number(self, obj):
         from course.services import get_answered_question_number
         return get_answered_question_number(obj)
+
+
+class UserAchievementSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source='achievement.id')
+    title = serializers.CharField(source='achievement.title')
+    description = serializers.CharField(source='achievement.description')
+    type = serializers.CharField(source='achievement.type')
+    show_text = serializers.CharField(source='achievement.show_text')
+    prize = serializers.URLField(source='achievement.prize')
+
+    class Meta:
+        model = UserAchievement
+        fields = ('id', 'title', 'description', 'type', 'show_text', 'prize')

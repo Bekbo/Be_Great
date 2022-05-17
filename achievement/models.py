@@ -52,7 +52,7 @@ class Achievement(IsActiveMixin):
     )
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} - {self.type}'
 
 
 class UserAchievement(TimestampMixin):
@@ -73,3 +73,6 @@ class UserAchievement(TimestampMixin):
     class Meta:
         verbose_name = 'Достижение пользователя'
         verbose_name_plural = 'Достижении пользователей'
+
+    def __str__(self):
+        return f'{self.user} - {self.achievement.type}'
