@@ -108,5 +108,6 @@ def get_result_of_multitest(user):
         raise ValidationError('Вы ответили не на все вопросы!')
     achievement = Achievement.objects.filter(min_points__lte=multitest.result).order_by('-min_points').first()
     UserAchievement.objects.create(user_id=user.id, achievement_id=achievement.id)
+    # all
     user_achievements = UserAchievement.objects.filter(user_id=user.id)
     return user_achievements
