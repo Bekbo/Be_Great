@@ -22,11 +22,11 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone, password):
+    def create_superuser(self, phone, password, email):
         """
         Creates and saves a superuser with the given phone and password
         """
-        user = self.create_user(phone, password=password)
+        user = self.create_user(phone, password=password, email=email)
         user.is_admin = True
         user.is_superuser = True
         user.is_moderator = True
