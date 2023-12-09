@@ -1,14 +1,15 @@
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 SECRET_KEY = 'django-insecure-lz=rqug2gfu1uk0n5=nbw6c@5%)d%0y=nb^6u1zo$84laed00d'
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG", True)
 
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.0']
 
 
 INSTALLED_APPS = [
@@ -66,12 +67,12 @@ WSGI_APPLICATION = 'BeGreat.wsgi.application'
 
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'be_great',
-            'USER': 'be_great',
-            'PASSWORD': 'be_great',
-            'HOST': 'localhost',
-            'PORT': '5432'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT")
     }
 }
 
