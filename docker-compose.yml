@@ -1,28 +1,21 @@
 version: '3'
 
 services:
-  postgres-db:
-    image: postgres:16
-    container_name: postgres
-    environment:
-      POSTGRES_USER: be_great
-      POSTGRES_PASSWORD: be_great
-      POSTGRES_DB: be_great
-    ports:
-      - "5432:5432"
-
   django:
     container_name: djangoapp
-    build:
-      context: .
-    environment:
-      DEBUG: "False"
-      DB_NAME: "be_great"
-      DB_USER: "be_great"
-      DB_PASSWORD: "be_great"
-      DB_HOST: "postgres-db"
-      DB_PORT: 5432
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     depends_on:
       - postgres-db
+
+  postgres-db:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=be_great
+      - POSTGRES_USER=be_great
+      - POSTGRES_PASSWORD=be_great
+    ports:
+      - "5432:5432"

@@ -7,6 +7,6 @@ ADD . /Be_Great/
 
 
 RUN pip install -r requirements.txt
-CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+CMD python manage.py migrate
 
 #CMD gunicorn BeGreat.wsgi:application -b 0.0.0.0:8000
