@@ -57,9 +57,11 @@ class CourseViewSet(
         serializer = self.get_serializer(courses, many=True)
         return Response(serializer.data)
 
-    @action(methods=("POST",), detail=True, permission_classes=(IsAuthenticated, ))
+    @action(methods=("POST",), detail=True)
     def join_course(self, request, *args, **kwargs):
         from course.services import join_course
+        print(request.data)
+        print(request.auth)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user_course = join_course(**serializer.validated_data)

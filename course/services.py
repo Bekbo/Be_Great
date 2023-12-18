@@ -16,7 +16,7 @@ def can_user_join_course(user, category_id, anonymous_user):
         raise ValidationError('Вы уже брали этот курс')
 
 
-def join_course(user, category_id, anonymous_user):
+def join_course(user, category_id, anonymous_user=None):
     user_course = UserCourse.objects.create(user=user, category_id=category_id, anonymous_user=anonymous_user)
     return user_course
 
@@ -27,7 +27,7 @@ def get_user_course(user, anonymous_user, category_id):
     return UserCourse.objects.filter(anonymous_user=anonymous_user, category_id=category_id).first()
 
 
-def save_note(user, category_id, note, anonymous_user):
+def save_note(user, category_id, note, anonymous_user=None):
     user_course = get_user_course(user, anonymous_user, category_id)
     if not user_course.note:
         user_course.note = note

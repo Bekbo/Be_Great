@@ -26,7 +26,7 @@ class ProfileRequestSerializer(serializers.Serializer):
     middle_name = serializers.CharField(required=False)
     phone = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
-    region = serializers.ImageField(required=False)
+    region = serializers.CharField(required=False)
     avatar = serializers.ImageField(required=False)
     password = serializers.CharField(min_length=8, required=False)
 
