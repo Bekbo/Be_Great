@@ -49,7 +49,7 @@ class CustomPagePagination(PageNumberPagination):
 
 
 class CategoryPagination(PageNumberPagination):
-    page_size = 1
+    page_size = 10
 
     def get_next_link(self):
         if not self.page.has_next():
