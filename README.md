@@ -10,17 +10,18 @@ To get feedback from users, there was added a page, to ask questions, and view r
 
 ## Table of Contents
 
-- [Features](#features)
+### Features
+
 1. Courses
 2. Quizzes
 3. Multitests
 4. Conversations
 
-- [Technologies Used](#technologies-used)
+### Technologies Used
 1. For django app check requirements.txt
 2. For react app check package.json files
 
-- [Contributing](#contributing)
+### Contributing
 Feel free to reply
 1. ualikhan@1fit.app
 2. bekbolat@1fit.app
