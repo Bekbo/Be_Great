@@ -8,8 +8,6 @@ BeGreat is a web platform that provides lectures and courses for students, and t
 Also, for those students who have passed multiple courses, there can be generated multitest for 10 questions from passed courses.
 To get feedback from users, there was added a page, to ask questions, and view replies for the questions.
 
-## Table of Contents
-
 ### Features
 
 1. Courses
