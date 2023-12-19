@@ -1,6 +1,4 @@
-# Be_Great
-
-# Online Courses Platform
+# Be_Great (Online Courses Platform)
 
 ## Overview
 
